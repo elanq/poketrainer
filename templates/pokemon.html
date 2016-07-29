@@ -79,6 +79,7 @@
               <th>Def IV</th>
               <th>Move 1</th>
               <th>Move 2</th>
+              <th>Date caught</th>
             </thead>
             {% for pokemon in pokemons %}
             <tr id="{{pokemon['id']}}">
@@ -96,6 +97,7 @@
               <td data-order="{{pokemon["individual_defense"]}}">Def IV: {{pokemon["individual_defense"]}}</td>
               <td>{{attacks[pokemon["move_1"]]}}</td>
               <td>{{attacks[pokemon["move_2"]]}}</td>
+              <td class="creation_time">{{pokemon["creation_time_ms"]}}</td>
             </tr>
             {% endfor %}
           </table>
@@ -126,6 +128,10 @@
           order: [[ 0, "desc" ]],
           searching: false,
           paging: false
+        });
+        $('.creation_time').each(function() {
+          var now = new Date($(this).text() * 1);
+          $(this).text(now)
         });
     });
     </script>
