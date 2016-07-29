@@ -66,8 +66,8 @@
         <div class="table-responsive">
           <table id="poke-table" class="table table-striped">
             <thead>
-              <th>Pokemon number</th>
               <th>Recent</th>
+              <th>Pokemon number</th>
               <th>Name</th>
               <th>Nickname</th>
               <th>CP</th>
@@ -82,9 +82,9 @@
             </thead>
             {% for pokemon in pokemons %}
             <tr id="{{pokemon['id']}}">
-              <td data-order="{{pokemon['pokemon_id']}}">{{pokemon["pokemon_id"]}}</td>
               <td data-order="{{ pokemon["creation_time_ms"] }}"><img style="max-height: 50px;" src={{ url_for( 'static', filename="pokemon/%03d.png" % pokemon[
                   'pokemon_id']) }}></td>
+              <td data-order="{{pokemon['pokemon_id']}}">{{pokemon["pokemon_id"]}}</td>
               <td>{{pokemon["name"]}}</td>
               <td data-order="{{pokemon["nickname"]}}">{{pokemon["nickname"]}}</td>
               <td data-order="{{pokemon["cp"]}}">CP: {{pokemon["cp"]}}</td>
@@ -123,7 +123,7 @@
             $('#map').addClass('scrolloff');
         });
         $('#poke-table').dataTable({
-          order: [[ 0, "asc" ]],
+          order: [[ 0, "desc" ]],
           searching: false,
           paging: false
         });
