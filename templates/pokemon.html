@@ -45,7 +45,7 @@
           <div class="container-fluid">
             Level XP: {{player["level_xp"]}} / {{player["goal_xp"]}}
             <div class="progress">
-              <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ (player["experience"] / player["next_level_xp"] * 100)|int }}%;">
+              <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ (player["level_xp"] / player["goal_xp"] * 100)|int }}%;">
                 {{ (player["level_xp"] / player["goal_xp"] * 100)|int }}%
               </div>
             </div>
@@ -66,8 +66,7 @@
         <div class="table-responsive">
           <table id="poke-table" class="table table-striped">
             <thead>
-              <th>Recent</th>
-              <th>Pokemon number</th>
+              <th>Pokemon</th>
               <th>Name</th>
               <th>Nickname</th>
               <th>CP</th>
@@ -83,9 +82,8 @@
             </thead>
             {% for pokemon in pokemons %}
             <tr id="{{pokemon['id']}}">
-              <td data-order="{{ pokemon["creation_time_ms"] }}"><img style="max-height: 50px;" src={{ url_for( 'static', filename="pokemon/%03d.png" % pokemon[
+              <td data-order="{{ pokemon["pokemon_id"] }}"><img style="max-height: 50px;" src={{ url_for( 'static', filename="pokemon/%03d.png" % pokemon[
                   'pokemon_id']) }}></td>
-              <td data-order="{{pokemon['pokemon_id']}}">{{pokemon["pokemon_id"]}}</td>
               <td>{{pokemon["name"]}}</td>
               <td data-order="{{pokemon["nickname"]}}">{{pokemon["nickname"]}}</td>
               <td data-order="{{pokemon["cp"]}}">CP: {{pokemon["cp"]}}</td>
@@ -124,11 +122,14 @@
         $("#map").mouseleave(function () {
             $('#map').addClass('scrolloff');
         });
+
+        var initialSortIndex = $('th').size();
         $('#poke-table').dataTable({
-          order: [[ 0, "desc" ]],
+          order: [[ initialSortIndex - 1, "desc" ]],
           searching: false,
           paging: false
         });
+
         $('.creation_time').each(function() {
           var now = new Date($(this).text() * 1);
           $(this).text(now)
